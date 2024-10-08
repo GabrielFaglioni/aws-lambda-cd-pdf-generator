@@ -18,6 +18,7 @@ func SolicitarDeclaracaoConteudoLocalV2(solicitarDeclaracaoConteudo types.Solici
 
 func SolicitarDeclaracaoConteudoV2(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("\n\n========== INICIANDO LAMBDA ==========")
+	fmt.Println("Received body:", req.Body)
 	var solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo
 	err := json.Unmarshal([]byte(req.Body), &solicitarDeclaracaoConteudo)
 
