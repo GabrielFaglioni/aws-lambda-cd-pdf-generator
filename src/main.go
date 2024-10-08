@@ -13,16 +13,18 @@ func main() {
 }
 
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	switch strings.ToUpper(req.HTTPMethod) {
+	method := strings.ToUpper(req.HTTPMethod)
+
+	switch method {
 	case "GET":
-		return handlers.HandleUnsupportedMethod()
+		return handlers.HandleUnsupportedMethod(method)
 	case "POST":
-		return handlers.SolicitarDeclaracaoConteudoV2(req) //Para dar update para a V2, basta substituir para 'SolicitarDeclaracaoConteudoV2'
+		return handlers.SolicitarDeclaracaoConteudoV2(req)
 	case "PUT":
-		return handlers.HandleUnsupportedMethod()
+		return handlers.HandleUnsupportedMethod(method)
 	case "DELETE":
-		return handlers.HandleUnsupportedMethod()
+		return handlers.HandleUnsupportedMethod(method)
 	default:
-		return handlers.HandleUnsupportedMethod()
+		return handlers.HandleUnsupportedMethod(method)
 	}
 }

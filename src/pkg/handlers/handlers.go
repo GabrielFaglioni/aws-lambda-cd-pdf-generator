@@ -48,9 +48,9 @@ func SolicitarDeclaracaoConteudoV2(req events.APIGatewayProxyRequest) (*events.A
 	return ApiResponse(http.StatusOK, successBody)
 }
 
-func HandleUnsupportedMethod() (*events.APIGatewayProxyResponse, error) {
+func HandleUnsupportedMethod(method string) (*events.APIGatewayProxyResponse, error) {
 	errorBody := ErrorResponse{
-		Message: "Método inválido, utilize somente POST",
+		Message: fmt.Sprintf("Método inválido: %s. Utilize somente POST", method),
 	}
 
 	return ApiResponse(http.StatusBadRequest, errorBody)
