@@ -1,0 +1,38 @@
+name: Deploy Go Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.20"
+
+      - name: Build Lambda
+        run: |
+          cd src
+          GOARCH=arm64 GOOS=linux go build -o bootstrap main.go
+          zip deployment.zip bootstrap
+          rm bootstrap
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "sa-east-1"
+
+      - name: Deploy to Lambda
+        run: |
+          aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} \
+          --zip-file fileb://deployment.zip
