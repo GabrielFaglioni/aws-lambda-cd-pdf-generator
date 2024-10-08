@@ -1,7 +1,3 @@
-
-
-Here is a comprehensive README file for the Go project:
-
 **Content Declaration PDF Generator for Brazilian Post Office**
 ===========================================================
 
