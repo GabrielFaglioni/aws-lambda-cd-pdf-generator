@@ -23,6 +23,7 @@ jobs:
           cd src
           GOARCH=arm64 GOOS=linux go build -o bootstrap main.go
           zip deployment.zip bootstrap
+          mv deployment.zip ../
           rm bootstrap
 
       - name: Configure AWS credentials
