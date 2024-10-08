@@ -13,10 +13,10 @@ import (
 func SolicitarDeclaracaoConteudoLocalV2(solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo) error {
 	fmt.Println("\n\n========== INICIANDO LAMBDA ==========")
 
-	return helpers.GenerateContentDeclarationPDFLocalV2(solicitarDeclaracaoConteudo)
+	return helpers.GenerateContentDeclarationPDFLocal(solicitarDeclaracaoConteudo)
 }
 
-func SolicitarDeclaracaoConteudoV2(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+func SolicitarDeclaracaoConteudo(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("\n\n========== INICIANDO LAMBDA ==========")
 	var solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo
 	err := json.Unmarshal([]byte(req.Body), &solicitarDeclaracaoConteudo)
@@ -30,7 +30,7 @@ func SolicitarDeclaracaoConteudoV2(req events.APIGatewayProxyRequest) (*events.A
 		return ApiResponse(http.StatusBadRequest, errorBody)
 	}
 
-	base64String, err := helpers.GenerateContentDeclarationV2(solicitarDeclaracaoConteudo)
+	base64String, err := helpers.GenerateContentDeclaration(solicitarDeclaracaoConteudo)
 
 	if err != nil {
 		errText := fmt.Sprintf("Erro GenerateLabelsPDF: %s", err.Error())

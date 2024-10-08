@@ -15,10 +15,10 @@ const (
 	nObjetosPorFolha = 4
 )
 
-func GenerateContentDeclarationPDFLocalV2(solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo) error {
+func GenerateContentDeclarationPDFLocal(solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo) error {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetAutoPageBreak(false, 0)
-	objetosPostais, objErr := rearrangeObjetoPostalV3(solicitarDeclaracaoConteudo.ObjetosPostais)
+	objetosPostais, objErr := rearrangeObjetoPostal(solicitarDeclaracaoConteudo.ObjetosPostais)
 
 	if objErr != nil {
 		fmt.Println("Error rearranging ObjetoPostal, using original: ", objErr)
@@ -66,10 +66,10 @@ func GenerateContentDeclarationPDFLocalV2(solicitarDeclaracaoConteudo types.Soli
 	return pdf.OutputFileAndClose("label.pdf")
 }
 
-func GenerateContentDeclarationV2(solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo) (string, error) {
+func GenerateContentDeclaration(solicitarDeclaracaoConteudo types.SolicitarDeclaracaoConteudo) (string, error) {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetAutoPageBreak(false, 0)
-	objetosPostais, objErr := rearrangeObjetoPostalV3(solicitarDeclaracaoConteudo.ObjetosPostais)
+	objetosPostais, objErr := rearrangeObjetoPostal(solicitarDeclaracaoConteudo.ObjetosPostais)
 
 	if objErr != nil {
 		fmt.Println("Error rearranging ObjetoPostal, using original: ", objErr)
@@ -153,7 +153,7 @@ func DrawContentDeclarationV2(pdf *gofpdf.Fpdf, remetente types.SolicitarEtiquet
 	return nextY
 }
 
-func rearrangeObjetoPostalV3(objetos []types.SolicitarDeclaracaoConteudoObjetoPostal) (rearranged []types.SolicitarDeclaracaoConteudoObjetoPostal, err error) {
+func rearrangeObjetoPostal(objetos []types.SolicitarDeclaracaoConteudoObjetoPostal) (rearranged []types.SolicitarDeclaracaoConteudoObjetoPostal, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			// Convert the panic to an error
